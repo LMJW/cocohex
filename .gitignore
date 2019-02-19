@@ -1,0 +1,4 @@
+hex/bin/*
+hex/cocos2d/*
+hex/proj.*
+hex/Resources*
