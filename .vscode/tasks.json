@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_mac",
+            "type": "shell",
+            "command": "${COCOS} run -s hex/ -p mac",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "env": {
+                    "COCOS": "/Users/will/Documents/cocos2d-x-3.17.1/tools/cocos2d-console/bin/cocos",
+                }
+            }
+        }
+    ]
+}
