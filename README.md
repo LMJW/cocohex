@@ -1,0 +1,2 @@
+# cocohex
+Hex game
