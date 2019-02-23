@@ -1,5 +1,5 @@
-#ifndef __WELCOME_SCENE_H__
-#define __WELCOME_SCENE_H__
+#ifndef _WELCOME_SCENE_H_
+#define _WELCOME_SCENE_H_
 
 #include "cocos2d.h"
 
@@ -10,6 +10,12 @@ public:
     virtual bool init();
 
     CREATE_FUNC(WelcomeScene);
+
+    /// Define callbacks for different menuitems
+    void menuItemExitCallback();
+    void menuItemSettingCallback();
+    void menuItemPlayCallback();
+    void menuItemAboutCallback();
 };
 
-#endif  //__WELCOME_SCENE_H__
+#endif  //_WELCOME_SCENE_H_

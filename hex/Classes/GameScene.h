@@ -5,8 +5,16 @@
 //  Created by Liming Jiang on 23/2/19.
 //
 
-#ifndef GameScene_h
-#define GameScene_h
+#ifndef _GAME_SCENE_H_
+#define _GAME_SCENE_H_
 
+#include "cocos2d.h"
 
-#endif /* GameScene_h */
+class GameScene : public cocos2d::Layer {
+public:
+    static cocos2d::Scene* createScene();
+    virtual bool init();
+    CREATE_FUNC(GameScene);
+};
+
+#endif /* _GAMESCENE_H_ */
