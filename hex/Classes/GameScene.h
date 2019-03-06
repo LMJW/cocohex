@@ -15,6 +15,7 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
     CREATE_FUNC(GameScene);
+    void drawHexes(int);
 };
 
 #endif /* _GAMESCENE_H_ */

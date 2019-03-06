@@ -1,4 +1,6 @@
 #include "GameScene.h"
+#include <iostream>
+#include "HexNode.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -16,23 +18,23 @@ bool GameScene::init() {
     if (!Layer::init()) {
         return false;
     }
-    auto _drawNode = DrawNode::create();
+    drawHexes(4);
+
+    return true;
+}
+
+/// @param n integer to determine the edge of hex grid. The total numbers of
+/// hexes in the grid equls to n*n;
+void GameScene::drawHexes(int n) {
+    float init_x = this->getContentSize().width / 2;
+    float init_y = this->getContentSize().height / 2;
+    float r = 30;
     Color4F borderColor = Color4F::RED;
     Color4F fillColor = Color4F::WHITE;
-
-    float x = 100;
-    float y = 100;
-    float r = 30;
-
-    Point vertices[6] = {Point(x, y),
-                         Point(x + 0.5 * r, y + 1.732 * r / 2.),
-                         Point(x + 1.5 * r, y + 1.732 * r / 2.),
-                         Point(x + 2 * r, y),
-                         Point(x + 1.5 * r, y - 1.732 * r / 2),
-                         Point(x + 0.5 * r, y - 1.732 * r / 2)};
-
-    _drawNode->drawPolygon(vertices, 6, fillColor, 1.f, borderColor);
-    _drawNode->setAnchorPoint(Point(0, 0));
-    this->addChild(_drawNode);
-    return true;
+    for (int i = -n / 2; i < n / 2; ++i) {
+        for (int j = -n / 2; j < n / 2; ++j) {
+            auto _drawNode = HexNode::createNode(init_x, init_y, r, i, j);
+            this->addChild(_drawNode);
+        }
+    }
 }
