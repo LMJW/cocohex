@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 
+/// HexNode extend the DrawNode class.
 class HexNode : public cocos2d::DrawNode {
 public:
     virtual bool init();
@@ -17,10 +18,7 @@ public:
     int idx;
     int idy;
 
-    virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
-    virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);
-    virtual void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
-    virtual void onTouchCancelled(cocos2d::Touch*, cocos2d::Event*);
+    /// This Macro function implemented smart pointer to avoid memory leak
     CREATE_FUNC(HexNode);
 };
 
