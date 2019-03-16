@@ -37,16 +37,23 @@ bool GameScene::init() {
 /// @param n integer to determine the edge of hex grid. The total numbers of
 /// hexes in the grid equls to n*n;
 void GameScene::drawHexes(int n) {
-    /// hard code the 'center' of hex grid
-    float init_x = this->getContentSize().width / 2;
-    float init_y = this->getContentSize().height / 2;
-    /// TODO: change the hard coded value
+    // r is the edge length of the hex
     float r = this->r;
+    this->grid_n = n;
+    // change the coordinate to start from (0,0)
+    float x_shift = (n % 2 == 0 ? (n + 0.5) * r : (n + 1) * r);
+
+    float init_x = this->getContentSize().width / 2 - x_shift;
+    float init_y = this->getContentSize().height / 2;
+
+    this->_x_shift = init_x;
+    this->_y_shift = init_y;
+    /// TODO: change the hard coded value
 
     /// Current implementation will cause even number grid shift towards left
     /// TODO: deal with even n;
-    for (int i = -n / 2; i < n * 1.0 / 2; ++i) {
-        for (int j = -n / 2; j < n * 1.0 / 2; ++j) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
             auto _drawNode = HexNode::createNode(init_x, init_y, r, i, j);
             hexgrid.pushBack(_drawNode);
             this->addChild(_drawNode);
@@ -59,10 +66,12 @@ void GameScene::drawHexes(int n) {
 /// c * e_1 + d * e_2. Once we get the c & d, we can round the value to the hex
 /// coordinate.
 int GameScene::_hex_index(float x, float y) {
+    /// TODO: this vector mapping is incorrect
+    /// we need three coordinate to represent a hex position
     /// transformed vector coordinate
     /// p, q represents the coordinate of hex coordinate
-    auto p = 2 * x / 3;
-    auto q = 1.732 / 3 * y - x / 3;
+    auto p = 2 * x / 3;              // point to 3 o'clock
+    auto q = 1.732 / 3 * y - x / 3;  // point to 7 o'clock
 
     /// pidx/qidx represents the hex index of p/q coordinate
     int pidx = 0;
@@ -81,18 +90,22 @@ int GameScene::_hex_index(float x, float y) {
     qidx = f(q);
 
     /// Debug info
-    std::cout << p << " | " << q << std::endl;
-    std::cout << pidx << " | " << qidx << std::endl;
+    std::cout << "x:" << x << " | "
+              << "y:" << y << std::endl;
+    std::cout << "p:" << p << " | "
+              << "q:" << q << std::endl;
+    std::cout << "pid:" << pidx << " | "
+              << "qid:" << qidx << std::endl;
+    return pidx * this->r + qidx;
 }
 
 bool GameScene::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event*) {
     cocos2d::log("ontouchbegan");
     auto touchpoint = touch->getLocationInView();
-    float init_x = this->getContentSize().width / 2;
-    float init_y = this->getContentSize().height / 2;
 
     /// transform the touch coordinate
-    _hex_index(touchpoint.x - init_x, touchpoint.y - init_y);
+    auto idx = _hex_index(touchpoint.x - this->_x_shift,
+                          touchpoint.y - this->_y_shift);
     return true;
 };
 void GameScene::onTouchEnded(cocos2d::Touch*, cocos2d::Event*) {

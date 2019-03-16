@@ -23,6 +23,11 @@ public:
     /// Hex grid constant. r -> The edge length of hex.
     /// The value can be reset by setting scene
     float r = 30;
+    int grid_n;
+    float _x_shift;
+    float _y_shift;
+
+    bool player;
 
     /// drawHexes method draw the @param by @param grid
     void drawHexes(int);
